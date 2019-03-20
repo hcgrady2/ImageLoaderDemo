@@ -8,25 +8,26 @@
     android:orientation="vertical"
     >
 
-   <Button
-       android:id="@+id/one"
-       android:text="one"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content" />
-
+    <Button
+        android:id="@+id/load"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="loadMore"
+        android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/more"
-        android:text="Second"
+        android:id="@+id/lru_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:textAllCaps="false" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/main_li"
+            android:id="@+id/second_li"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

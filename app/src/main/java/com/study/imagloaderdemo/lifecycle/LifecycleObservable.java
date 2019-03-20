@@ -1,6 +1,9 @@
 package com.study.imagloaderdemo.lifecycle;
 
+import android.util.Log;
+
 import com.study.imagloaderdemo.cache.DoubleCache;
+import com.study.imagloaderdemo.utils.Constants;
 
 /**
  * Created by hcw on 2019/3/16.
@@ -30,9 +33,6 @@ public class LifecycleObservable {
     public void onStop(int activityCode){
 
     }
-
-
-
 
     public void onDestroy(int activityCode){
         DoubleCache.getInstance().remove(activityCode);

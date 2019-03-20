@@ -2,8 +2,10 @@ package com.study.imagloaderdemo.cache;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.study.imagloaderdemo.request.BitmapRequest;
+import com.study.imagloaderdemo.utils.Constants;
 
 /**
  * Created by hcw on 2019/3/16.
@@ -74,6 +76,7 @@ public class DoubleCache implements BitmapCache {
 
 
     public void remove(int activityCode) {
+        Log.i(Constants.TAG, "double remove: ");
         mMemoryCache.remove(activityCode);
        // mDiskCache.remove(request);
     }

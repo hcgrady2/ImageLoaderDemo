@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.study.imagloaderdemo.cache.DoubleCache;
@@ -23,6 +24,7 @@ import java.util.concurrent.BlockingDeque;
 //相对于消费者，去消费掉请求，肯定是耗时的
 public class BitmapDispatcher extends Thread {
 
+    private static final String TAG = "GlideDemo";
     private Handler handler = new Handler(Looper.getMainLooper());
 
     DoubleCache doubleCache = DoubleCache.getInstance();
@@ -42,12 +44,8 @@ public class BitmapDispatcher extends Thread {
                 showLodingImage(request);
                 //加载图片
                 Bitmap bitmap = findBitmap(request);
-
                 //刷新 ui
-
                 deliveryUIThread(request,bitmap);
-
-
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -57,6 +55,7 @@ public class BitmapDispatcher extends Thread {
 
 
     private void deliveryUIThread(final BitmapRequest request,final Bitmap bitmap){
+
         // 自线程 ----> UI 线程
 
         handler.post(new Runnable() {
@@ -126,7 +125,6 @@ public class BitmapDispatcher extends Thread {
             }catch (Exception e){
                 e.printStackTrace();
             }
-
             try {
                 if (os != null){
                     os.close();

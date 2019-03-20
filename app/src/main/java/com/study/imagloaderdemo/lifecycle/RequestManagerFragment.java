@@ -2,6 +2,9 @@ package com.study.imagloaderdemo.lifecycle;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.util.Log;
+
+import com.study.imagloaderdemo.utils.Constants;
 
 /**
  * Created by hcw on 2019/3/16.
@@ -11,7 +14,7 @@ import android.app.Fragment;
 /**
  * 生命周期管理，观察者
  */
-public class RequesManagerFragment extends Fragment {
+public class RequestManagerFragment extends Fragment {
 
     Activity mActivity;
 
@@ -30,6 +33,7 @@ public class RequesManagerFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        //这里就是 glide 图片生命周期管理
         lifecycleObservable.onDestroy(activityCode);
     }
 

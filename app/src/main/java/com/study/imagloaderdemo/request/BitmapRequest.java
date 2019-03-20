@@ -2,6 +2,7 @@ package com.study.imagloaderdemo.request;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.study.imagloaderdemo.listener.RequestListener;
@@ -16,7 +17,8 @@ import java.lang.ref.SoftReference;
 
 public class BitmapRequest {
 
-    public BitmapRequest(Activity activity){
+    public BitmapRequest(Context context){
+        this.context = context;
     }
 
 
@@ -32,6 +34,21 @@ public class BitmapRequest {
     private Context context;
     private RequestListener listener;
 
+
+    public BitmapRequest load(String url){
+        this.uri = url;
+        this.uriMD5 = MD5Utils.toMD5(url);
+        return this;
+    }
+
+    //随机接口，url 相同，通过另一个参数保证缓存不相同，但是这样，所有的图片的 keyset 都不一样了
+    public BitmapRequest load(String url,int i){
+        this.uri = url;
+        this.uriMD5 = MD5Utils.toMD5(url + String.valueOf(i));
+        return this;
+    }
+
+
     public BitmapRequest loading(int loadingResId){
         this.loadingResId = loadingResId;
         return this;
@@ -46,18 +63,16 @@ public class BitmapRequest {
 
 
     public void into(ImageView imageView){
+
         this.softReference = new SoftReference<ImageView>(imageView);
         //防止错位
         imageView.setTag(uriMD5);
         RequsetManager.getInstance().addBitmapRequest(this);
+
     }
 
 
-    public BitmapRequest load(String url){
-        this.uri = url;
-        this.uriMD5 = MD5Utils.toMD5(url);
-        return this;
-    }
+
 
     public String getUri() {
         return uri;

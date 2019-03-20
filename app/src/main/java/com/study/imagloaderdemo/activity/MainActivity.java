@@ -1,5 +1,6 @@
-package com.study.imagloaderdemo;
+package com.study.imagloaderdemo.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.study.imagloaderdemo.R;
 import com.study.imagloaderdemo.core.Glide;
 import com.study.imagloaderdemo.listener.RequestListener;
 
@@ -47,10 +49,9 @@ public class MainActivity extends AppCompatActivity {
     public void loadOne(){
         ImageView imageView = new ImageView(this);
         imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
         main_li.addView(imageView);
-        Glide.with(this).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552740382406&di=aa5514b3a4f472e3c9848fbc7cb9b600&imgtype=0&src=http%3A%2F%2Fh.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F730e0cf3d7ca7bcb051bd704b0096b63f624a8bc.jpg")
-        .loading(R.drawable.ic_bubble_24dp).listener(new RequestListener() {
+        Glide.with(this).load("http://pic22.nipic.com/20120714/9622064_105642209176_2.jpg")
+        .loading(R.drawable.length).listener(new RequestListener() {
             @Override
             public boolean onException() {
                 return false;
@@ -62,14 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }).into(imageView);
-
-
+     //   imageView.setImageResource(R.drawable.length);
     }
 
     public void loadMore(){
-
+        startActivity(new Intent(MainActivity.this,SecondActivity.class));
     }
-
 
     @Override
     protected void onStart() {

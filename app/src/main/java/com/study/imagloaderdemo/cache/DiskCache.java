@@ -8,6 +8,7 @@ import android.util.Log;
 import com.study.imagloaderdemo.cache.disk.DiskLruCache;
 import com.study.imagloaderdemo.cache.disk.IOUtil;
 import com.study.imagloaderdemo.request.BitmapRequest;
+import com.study.imagloaderdemo.utils.Constants;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -62,7 +63,6 @@ public class DiskCache implements BitmapCache {
     private File getDiskCacheDir(String mCacheDir, Context context) {
         File cacheDir = context.getCacheDir();
         File newCacheDir = new File(cacheDir, mCacheDir);
-        Log.i("wxf", "new cache path:" + newCacheDir.getAbsolutePath());
 
         return newCacheDir;
     }
@@ -74,6 +74,10 @@ public class DiskCache implements BitmapCache {
         try {
             //路径必须是合法字符
             editor = mDiskLruCache.edit(request.getUriMD5());
+            //同时加载同一张图片，这里的 editor 可能为 null,获取不到
+            if (editor == null){
+                return;
+            }
             os = editor.newOutputStream(0);
             if (os != null) {
                 if (persistBitmap2Disk(bitmap, os)) {
@@ -86,6 +90,7 @@ public class DiskCache implements BitmapCache {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }catch (Exception e){
         }
     }
 
