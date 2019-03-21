@@ -114,6 +114,7 @@ public class BitmapDispatcher extends Thread {
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             is = connection.getInputStream();
+            //todo:这里会 oom
             bitmap = BitmapFactory.decodeStream(is);
         }catch (Exception e){
             e.printStackTrace();

@@ -80,8 +80,24 @@ public class MemoryCache implements BitmapCache {
             if (mLruCache.get(request.getUriMD5()) == null){
                 Log.i(Constants.TAG, "start to put:" + request.getUriMD5());
                 mLruCache.put(request.getUriMD5(), bitmap);
+
+
+                Bitmap bitmap3  = mLruCache.get(request.getUriMD5());
+                if (bitmap3 != null && !bitmap.isRecycled()){
+                    //真正的图片回收
+                    Log.i(Constants.TAG, "bitmap is not null " );
+                }else {
+                    Log.i(Constants.TAG, "bitmap is  null !!!!!!!!!" );
+                }
+
+
+
+
+
             }
             activityCache.put(request.getUriMD5(),request.getContext().hashCode());
+
+
         }
     }
 

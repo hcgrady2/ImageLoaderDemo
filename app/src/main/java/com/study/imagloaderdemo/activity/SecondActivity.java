@@ -38,6 +38,8 @@ public class SecondActivity extends AppCompatActivity {
 
     private static final String TAG = "LruDemo";
 
+    private Bitmap bitmapTemp;
+
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -84,7 +86,7 @@ public class SecondActivity extends AppCompatActivity {
         lru_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //    LruTest();
+                LruTest();
             }
         });
     }
@@ -115,12 +117,12 @@ public class SecondActivity extends AppCompatActivity {
         private void LruTest(){
 
             Log.i(TAG, "LruTest: ");
-            Bitmap bitmap = getBitmapFromCache();
-            if(bitmap != null) {
+             bitmapTemp = getBitmapFromCache();
+            if(bitmapTemp != null) {
                 ImageView imageView = new ImageView(this);
                 imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 second_li.addView(imageView);
-                imageView.setImageBitmap(bitmap);
+                imageView.setImageBitmap(bitmapTemp);
 
             } else {
                 getBitmapFromInternet();
@@ -130,11 +132,12 @@ public class SecondActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy: ");
+        imageLoader.RemoveBitmap("bitmap");
+    }
 
     private Bitmap getBitmapFromCache() {
         Log.i(TAG, "getBitmapFromCache: ");
@@ -194,8 +197,32 @@ public class SecondActivity extends AppCompatActivity {
         }
 
         public Bitmap getBitmap(String key) {
-               Log.i(TAG, "getBitmap: ");
+               Log.i(TAG, "getBitmap:，from the cache");
                 return lruCache.get(key);
+        }
+
+        public void RemoveBitmap(String key){
+            if (lruCache.get(key) != null){
+
+                LinearLayout l = new LinearLayout(SecondActivity.this);
+                setContentView(l);
+                Log.i(TAG, "RemoveBitmap,not null ");
+                lruCache.get(key).recycle();
+                lruCache.remove(key);
+                bitmapTemp = null;
+                handler = null;
+                Path = null;
+                System.gc();
+
+
+
+                try {
+                    finalize();
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+
         }
 
     }
